@@ -1,0 +1,12 @@
+[package]
+name = "storage_experiment"
+version = "0.1.0"
+authors = ["Banya Choi <banyachoi.dev@gmail.com>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.40"
+thiserror = "1.0.24"
