@@ -26,7 +26,7 @@ impl<T, S: Storage> RawVec<T, S> {
         S: Storage<Context = ()>,
     {
         Ok(Self::with_handle_capacity(
-            unsafe { S::allocate_contextless(utils::layout_for::<T>(capacity)) }
+            unsafe { S::allocate(utils::layout_for::<T>(capacity), &mut ()) }
                 .map_err(|_| VecError)?,
             capacity,
         ))

@@ -40,40 +40,6 @@ where
         Self::deallocate(old_layout, old_handle, context);
         Ok(new_handle)
     }
-
-    // contextless
-
-    unsafe fn allocate_contextless(layout: Layout) -> Result<Self::Handle, AllocError>
-    where
-        Self: Storage<Context = ()>,
-    {
-        Self::allocate(layout, &mut ())
-    }
-
-    unsafe fn deallocate_contextless(layout: Layout, handle: &Self::Handle)
-    where
-        Self: Storage<Context = ()>,
-    {
-        Self::deallocate(layout, handle, &mut ())
-    }
-
-    unsafe fn as_ptr_contextless(layout: Layout, handle: &Self::Handle) -> NonNull<u8>
-    where
-        Self: Storage<Context = ()>,
-    {
-        Self::as_ptr(layout, handle, &())
-    }
-
-    unsafe fn reallocate_contextless(
-        old_layout: Layout,
-        new_layout: Layout,
-        handle: &Self::Handle,
-    ) -> Result<Self::Handle, AllocError>
-    where
-        Self: Storage<Context = ()>,
-    {
-        Self::reallocate(old_layout, new_layout, handle, &mut ())
-    }
 }
 
 pub struct AllocError;
