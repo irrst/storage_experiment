@@ -8,21 +8,21 @@ use std::{
 
 use crate::traits::{AllocError, Storage};
 
-pub struct InlineHandleStorage<S, const SIZE: usize> {
-    _marker: PhantomData<S>,
+pub struct InlineHandleStorage<ALIGN, const SIZE: usize> {
+    _marker: PhantomData<ALIGN>,
 }
 
-pub struct InlineHandle<S, const SIZE: usize> {
+pub struct InlineHandle<ALIGN, const SIZE: usize> {
     inline: UnsafeCell<[u8; SIZE]>,
-    _align: [S; 0],
+    _align: [ALIGN; 0],
 }
 
-impl<S, const SIZE: usize> Storage for InlineHandleStorage<S, SIZE> {
-    type Handle = InlineHandle<S, SIZE>;
+impl<ALIGN, const SIZE: usize> Storage for InlineHandleStorage<ALIGN, SIZE> {
+    type Handle = InlineHandle<ALIGN, SIZE>;
     type Context = ();
 
     unsafe fn allocate(layout: Layout, _: &mut Self::Context) -> Result<Self::Handle, AllocError> {
-        if layout.size() <= mem::size_of::<S>() && layout.align() <= mem::align_of::<S>() {
+        if layout.size() <= mem::size_of::<ALIGN>() && layout.align() <= mem::align_of::<ALIGN>() {
             Ok(Self::Handle {
                 inline: UnsafeCell::new(MaybeUninit::zeroed().assume_init()),
                 _align: [],
